@@ -1,204 +1,692 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0B1424">
 <title>ARUBA QR PRO</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
+:root {
+  --bg: #0B1424;
+  --panel: #181D27;
+  --panel2: #242830;
+  --blue: #1769FF;
+  --blue-hover: #3980FF;
+  --text: #F4F7FC;
+  --muted: #98A4B8;
+  --border: #30394A;
 }
 
-.container{
-background:#111;
-width:380px;
-padding:30px;
-border-radius:25px;
-box-shadow:0 15px 40px rgba(0,0,0,0.6);
-text-align:center;
+* {
+  box-sizing: border-box;
 }
 
-h1{
-margin-bottom:5px;
-font-size:28px;
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 28px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at top left, #182F52 0%, transparent 45%),
+    radial-gradient(ellipse at bottom right, #10294B 0%, transparent 40%),
+    var(--bg);
 }
 
-.subtitle{
-font-size:13px;
-color:#aaa;
-margin-bottom:20px;
+.app {
+  width: 100%;
+  max-width: 950px;
 }
 
-.tabs{
-display:flex;
-justify-content:space-between;
-margin-bottom:15px;
+.header {
+  text-align: center;
+  margin-bottom: 25px;
 }
 
-.tab{
-flex:1;
-padding:10px;
-margin:0 3px;
-border-radius:10px;
-cursor:pointer;
-font-size:13px;
-background:#222;
+/* LOGO: coloque logo.png na mesma pasta deste index */
+.logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 12px;
 }
 
-.tab.active{
-background:#00c6ff;
-color:black;
-font-weight:600;
+.brand-icon {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #1769FF, #1046A8);
+  font-size: 34px;
+  font-weight: 800;
+  box-shadow: 0 10px 35px #1769FF40;
 }
 
-input,textarea{
-width:100%;
-padding:12px;
-margin:8px 0;
-border:none;
-border-radius:12px;
-font-size:14px;
-outline:none;
+h1 {
+  margin: 0;
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
-textarea{
-resize:none;
-height:70px;
+h1 span {
+  color: #4A91FF;
 }
 
-button{
-width:100%;
-padding:14px;
-margin-top:10px;
-border:none;
-border-radius:12px;
-font-weight:600;
-cursor:pointer;
+.subtitle {
+  margin: 9px 0 0;
+  font-size: 13px;
+  color: var(--muted);
 }
 
-.generate{
-background:#00c6ff;
+.card {
+  display: grid;
+  grid-template-columns: 1fr 0.85fr;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--panel);
+  box-shadow: 0 25px 80px #00000040;
 }
 
-.download{
-background:#28a745;
+.editor {
+  padding: 32px;
 }
 
-#qrcode{
-margin-top:20px;
-display:flex;
-justify-content:center;
+.preview {
+  padding: 32px 24px;
+  background: linear-gradient(155deg, #202734, #151B26);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.eyebrow {
+  color: #69A0FF;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 23px;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.description {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 10px 0 24px;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.tab {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 5px;
+  background: var(--panel2);
+  color: #B7C1D1;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  transition: 0.2s;
+}
+
+.tab span {
+  display: block;
+  font-size: 19px;
+  margin-bottom: 6px;
+}
+
+.tab.active {
+  color: white;
+  background: var(--blue);
+  border-color: var(--blue);
+  box-shadow: 0 5px 18px #1769FF35;
+}
+
+.tab:hover:not(.active) {
+  border-color: #5278AD;
+  color: white;
+}
+
+.field {
+  margin-bottom: 17px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #DCE5F3;
+}
+
+input[type="text"],
+input[type="url"],
+textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 11px;
+  border: 1px solid var(--border);
+  outline: none;
+  background: #0F1520;
+  color: white;
+  font: 14px 'Inter', sans-serif;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px #1769FF22;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #6F7D92;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 85px;
+}
+
+.help {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.color-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  margin: 20px 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #202530;
+}
+
+.color-row strong {
+  display: block;
+  font-size: 12px;
+}
+
+.color-row small {
+  display: block;
+  color: var(--muted);
+  margin-top: 5px;
+  font-size: 11px;
+}
+
+input[type="color"] {
+  width: 44px;
+  height: 38px;
+  padding: 3px;
+  border: 1px solid #455064;
+  border-radius: 9px;
+  background: #0F1520;
+  cursor: pointer;
+}
+
+button.action {
+  width: 100%;
+  min-height: 48px;
+  padding: 13px;
+  border: 0;
+  border-radius: 11px;
+  cursor: pointer;
+  font: 700 13px 'Inter', sans-serif;
+  transition: 0.2s;
+}
+
+.generate {
+  color: white;
+  background: var(--blue);
+  box-shadow: 0 7px 20px #1769FF30;
+}
+
+.generate:hover {
+  background: var(--blue-hover);
+  transform: translateY(-1px);
+}
+
+.download {
+  margin-top: 14px;
+  color: white;
+  background: #29364B;
+  border: 1px solid #3C4B62 !important;
+}
+
+.download:hover:not(:disabled) {
+  background: #344761;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.preview-tag {
+  color: #80B0FF;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.preview h2 {
+  margin-top: 15px;
+  font-size: 20px;
+}
+
+.preview-description {
+  max-width: 250px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 10px 0 20px;
+}
+
+.qr-frame {
+  width: 100%;
+  max-width: 280px;
+  min-height: 260px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: #FFFFFF;
+  box-shadow: 0 12px 35px #00000025;
+}
+
+#qrcode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 220px;
+}
+
+#qrcode canvas,
+#qrcode img {
+  max-width: 100%;
+  height: auto;
+}
+
+.empty {
+  color: #8A94A5;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+  padding: 20px;
+}
+
+.empty-icon {
+  font-size: 44px;
+  color: #1769FF;
+  margin-bottom: 10px;
+}
+
+.status {
+  min-height: 18px;
+  margin-top: 15px;
+  color: #76D9A5;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.status.error {
+  color: #FF8995;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #718098;
+  font-size: 11px;
+}
+
+@media (max-width: 700px) {
+  body {
+    padding: 20px 12px;
+    align-items: flex-start;
+  }
+
+  .card {
+    grid-template-columns: 1fr;
+    border-radius: 19px;
+  }
+
+  .editor {
+    padding: 23px 19px;
+  }
+
+  .preview {
+    padding: 28px 19px;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+  h2 {
+    font-size: 21px;
+  }
 }
 </style>
 </head>
+
 <body>
+<main class="app">
 
-<div class="container">
-<h1>ARUBA QR</h1>
-<div class="subtitle">Gerador profissional de QR Code</div>
+  <header class="header">
+    <!-- Quando tiver logo.png, descomente a linha abaixo
+         e remova a div brand-icon:
+         <img class="logo" src="logo.png" alt="Logo ARUBA">
+    -->
+    <div class="brand-icon" aria-hidden="true">A</div>
 
-<div class="tabs">
-<div class="tab active" onclick="selectType('whatsapp',this)">WhatsApp</div>
-<div class="tab" onclick="selectType('link',this)">Link</div>
-<div class="tab" onclick="selectType('text',this)">Texto</div>
-</div>
+    <h1>ARUBA <span>QR PRO</span></h1>
+    <p class="subtitle">Gerador profissional de QR Code</p>
+  </header>
 
-<div id="fields"></div>
+  <section class="card">
 
-<input type="color" id="color" value="#000000">
+    <div class="editor">
+      <div class="eyebrow">Personalize seu código</div>
+      <h2>Crie seu QR Code</h2>
+      <p class="description">
+        Escolha o tipo, preencha as informações e gere seu código em segundos.
+      </p>
 
-<button class="generate" onclick="generateQR()">Gerar QR Code</button>
+      <div class="tabs">
+        <button class="tab active" type="button" data-type="whatsapp">
+          <span>◉</span>WhatsApp
+        </button>
+        <button class="tab" type="button" data-type="link">
+          <span>↗</span>Link
+        </button>
+        <button class="tab" type="button" data-type="text">
+          <span>≡</span>Texto
+        </button>
+      </div>
 
-<div id="qrcode"></div>
+      <form id="qrForm" novalidate>
+        <div id="fields"></div>
 
-<button class="download" onclick="downloadQR()">Baixar PNG</button>
+        <div class="color-row">
+          <div>
+            <strong>Cor do QR Code</strong>
+            <small>Personalize a cor do seu código</small>
+          </div>
+          <input type="color" id="color" value="#0B1424"
+                 aria-label="Escolher cor do QR Code">
+        </div>
 
-</div>
+        <button class="action generate" type="submit">
+          ✦ &nbsp; Gerar QR Code
+        </button>
+      </form>
+    </div>
+
+    <aside class="preview">
+      <div class="preview-tag">Pré-visualização</div>
+      <h2>Seu código</h2>
+      <p class="preview-description">
+        Seu QR Code aparecerá aqui. Depois, você poderá baixar a imagem em PNG.
+      </p>
+
+      <div class="qr-frame">
+        <div id="qrcode">
+          <div class="empty">
+            <div class="empty-icon">▦</div>
+            Seu QR Code aparecerá neste espaço.
+          </div>
+        </div>
+      </div>
+
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+
+      <button class="action download" id="downloadBtn"
+              type="button" disabled>
+        ↓ &nbsp; Baixar QR Code em PNG
+      </button>
+    </aside>
+
+  </section>
+
+  <footer class="footer">
+    © <span id="year"></span> ARUBA QR PRO · Todos os direitos reservados
+  </footer>
+</main>
 
 <script>
-let currentType="whatsapp";
-let qr;
+'use strict';
 
-function selectType(type,el){
-currentType=type;
-document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-el.classList.add("active");
-renderFields();
-}
+let currentType = 'whatsapp';
+let generated = false;
 
-function renderFields(){
-const container=document.getElementById("fields");
-if(currentType==="whatsapp"){
-container.innerHTML=`
-<input type="text" id="number" placeholder="Número com DDD (ex: 19999999999)">
-<textarea id="message" placeholder="Mensagem automática (opcional)"></textarea>
-`;
-}
-if(currentType==="link"){
-container.innerHTML=`
-<input type="text" id="link" placeholder="https://exemplo.com">
-`;
-}
-if(currentType==="text"){
-container.innerHTML=`
-<textarea id="textdata" placeholder="Digite qualquer texto"></textarea>
-`;
-}
+const fields = document.getElementById('fields');
+const qrContainer = document.getElementById('qrcode');
+const colorInput = document.getElementById('color');
+const statusBox = document.getElementById('status');
+const downloadBtn = document.getElementById('downloadBtn');
+
+document.getElementById('year').textContent =
+  new Date().getFullYear();
+
+function setStatus(message, error = false) {
+  statusBox.textContent = message;
+  statusBox.classList.toggle('error', error);
 }
 
-function generateQR(){
-let data="";
-const color=document.getElementById("color").value;
+function renderFields() {
+  if (currentType === 'whatsapp') {
+    fields.innerHTML = `
+      <div class="field">
+        <label for="number">Número do WhatsApp</label>
+        <input type="text" id="number" inputmode="tel"
+          placeholder="Ex.: 19999999999" autocomplete="tel">
+        <p class="help">Informe o DDD e o número. Para números internacionais, inclua o código do país.</p>
+      </div>
 
-if(currentType==="whatsapp"){
-let number=document.getElementById("number").value.replace(/\D/g,'');
-let message=document.getElementById("message").value;
-data="https://wa.me/"+number;
-if(message){
-data+="?text="+encodeURIComponent(message);
-}
+      <div class="field">
+        <label for="message">Mensagem automática (opcional)</label>
+        <textarea id="message"
+          placeholder="Olá! Gostaria de mais informações..."></textarea>
+      </div>`;
+  } else if (currentType === 'link') {
+    fields.innerHTML = `
+      <div class="field">
+        <label for="link">Endereço do link</label>
+        <input type="url" id="link" inputmode="url"
+          placeholder="https://exemplo.com">
+        <p class="help">Informe o endereço completo do site.</p>
+      </div>`;
+  } else {
+    fields.innerHTML = `
+      <div class="field">
+        <label for="textdata">Texto para compartilhar</label>
+        <textarea id="textdata"
+          placeholder="Digite aqui seu texto..."></textarea>
+        <p class="help">O conteúdo digitado será armazenado diretamente no QR Code.</p>
+      </div>`;
+  }
 }
 
-if(currentType==="link"){
-data=document.getElementById("link").value;
+function getQRData() {
+  if (currentType === 'whatsapp') {
+    const rawNumber = document.getElementById('number').value.trim();
+    const number = rawNumber.replace(/\D/g, '');
+    const message = document.getElementById('message').value.trim();
+
+    if (!number) {
+      throw new Error('Digite o número do WhatsApp com DDD.');
+    }
+
+    if (number.length < 10 || number.length > 15) {
+      throw new Error('Confira o número informado e o DDD.');
+    }
+
+    let data = 'https://wa.me/' + number;
+
+    if (message) {
+      data += '?text=' + encodeURIComponent(message);
+    }
+
+    return data;
+  }
+
+  if (currentType === 'link') {
+    const value = document.getElementById('link').value.trim();
+
+    if (!value) {
+      throw new Error('Digite o link que deseja transformar em QR Code.');
+    }
+
+    let url;
+
+    try {
+      url = new URL(value);
+    } catch (_) {
+      throw new Error('Informe um endereço válido, como https://exemplo.com.');
+    }
+
+    if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+      throw new Error('Use um link que comece com http:// ou https://.');
+    }
+
+    return url.href;
+  }
+
+  const text = document.getElementById('textdata').value.trim();
+
+  if (!text) {
+    throw new Error('Digite o texto que deseja transformar em QR Code.');
+  }
+
+  return text;
 }
 
-if(currentType==="text"){
-data=document.getElementById("textdata").value;
+function generateQR(event) {
+  event.preventDefault();
+
+  let data;
+
+  try {
+    data = getQRData();
+  } catch (error) {
+    setStatus(error.message, true);
+    return;
+  }
+
+  if (typeof QRCode === 'undefined') {
+    setStatus(
+      'Biblioteca indisponível. Verifique sua conexão e recarregue a página.',
+      true
+    );
+    return;
+  }
+
+  qrContainer.innerHTML = '';
+
+  new QRCode(qrContainer, {
+    text: data,
+    width: 220,
+    height: 220,
+    colorDark: colorInput.value,
+    colorLight: '#FFFFFF',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  generated = true;
+  downloadBtn.disabled = false;
+  setStatus('✓ QR Code gerado com sucesso!');
 }
 
-document.getElementById("qrcode").innerHTML="";
-qr=new QRCode(document.getElementById("qrcode"),{
-text:data,
-width:220,
-height:220,
-colorDark:color,
-colorLight:"#ffffff"
+function downloadQR() {
+  if (!generated) {
+    setStatus('Gere um QR Code antes de baixar.', true);
+    return;
+  }
+
+  const canvas = qrContainer.querySelector('canvas');
+  const img = qrContainer.querySelector('img');
+
+  let imageURL;
+
+  if (canvas) {
+    imageURL = canvas.toDataURL('image/png');
+  } else if (img && img.src) {
+    imageURL = img.src;
+  } else {
+    setStatus('Não foi possível preparar a imagem. Tente gerar novamente.', true);
+    return;
+  }
+
+  const link = document.createElement('a');
+  link.href = imageURL;
+  link.download = 'aruba-qr.png';
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setStatus('✓ Download do PNG iniciado!');
+}
+
+document.querySelectorAll('.tab').forEach(button => {
+  button.addEventListener('click', () => {
+    currentType = button.dataset.type;
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.classList.toggle('active', tab === button);
+    });
+
+    renderFields();
+    setStatus('');
+  });
 });
-}
 
-function downloadQR(){
-const img=document.querySelector("#qrcode img");
-if(!img){alert("Gere um QR primeiro!");return;}
-const link=document.createElement("a");
-link.href=img.src;
-link.download="aruba-qr.png";
-link.click();
-}
+document.getElementById('qrForm').addEventListener(
+  'submit', generateQR
+);
+
+downloadBtn.addEventListener('click', downloadQR);
 
 renderFields();
 </script>
-
 </body>
 </html>
